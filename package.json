@@ -1,0 +1,46 @@
+{
+    "name": "doc-via-doxygen",
+    "version": "1.0.0",
+    "description": "Azure DevOps extension for generating documentation using Doxygen",
+    "main": "dist/extension/index.js",
+    "scripts": {
+        "build": "npm run build:pipeline-task && npm run build:code-hub && npm run build:extension",
+        "build:pipeline-task": "tsc --project tsconfig.pipeline-task.json && copy src\\pipeline-task\\task.json dist\\pipeline-task\\ && echo { \"name\": \"doc-via-doxygen-task\", \"version\": \"1.0.0\", \"main\": \"index.js\" } > dist\\pipeline-task\\package.json",
+        "build:code-hub": "tsc --project tsconfig.code-hub.json",
+        "build:extension": "npm run package:extension",
+        "test": "npm run test:pipeline-task && npm run test:code-hub",
+        "test:pipeline-task": "jest --testPathPattern=test/pipeline-task",
+        "test:pipeline-task:watch": "jest --testPathPattern=test/pipeline-task --watch",
+        "test:pipeline-task:coverage": "jest --testPathPattern=test/pipeline-task --coverage --coverageDirectory=dist/pipeline-task/coverage",
+        "test:code-hub": "jest --testPathPattern=test/code-hub",
+        "package:extension": "cd src/extension && tfx extension create --manifest-globs vss-extension.json --output-path ../../dist/extension/",
+        "clean": "Remove-Item dist -Recurse -Force -ErrorAction SilentlyContinue"
+    },
+    "keywords": [
+        "azure-devops",
+        "doxygen",
+        "documentation",
+        "pipeline-task",
+        "extension"
+    ],
+    "author": "satishc",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/satishc2437/doc-via-doxygen.git"
+    },
+    "devDependencies": {
+        "typescript": "^5.1.6",
+        "@types/fs-extra": "^11.0.1",
+        "@types/jest": "^30.0.0",
+        "@types/node": "^20.5.0",
+        "jest": "^29.6.2",
+        "tfx-cli": "^0.15.0",
+        "ts-jest": "^29.1.1"
+    },
+    "dependencies": {
+        "azure-pipelines-task-lib": "^4.11.0",
+        "fs-extra": "^11.1.1",
+        "path": "^0.12.7"
+    }
+}

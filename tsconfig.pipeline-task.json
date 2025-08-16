@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist/pipeline-task",
+        "rootDir": "./src/pipeline-task/src"
+    },
+    "include": [
+        "src/pipeline-task/src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "test"
+    ]
+}
